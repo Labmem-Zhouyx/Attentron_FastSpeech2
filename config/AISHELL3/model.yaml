@@ -1,0 +1,41 @@
+transformer:
+  encoder_layer: 4
+  encoder_head: 2
+  encoder_hidden: 256
+  decoder_layer: 6
+  decoder_head: 2
+  decoder_hidden: 256
+  conv_filter_size: 1024
+  conv_kernel_size: [9, 1]
+  encoder_dropout: 0.2
+  decoder_dropout: 0.2
+
+variance_predictor:
+  filter_size: 256
+  kernel_size: 3
+  dropout: 0.5
+
+variance_embedding:
+  pitch_quantization: "linear" # support 'linear' or 'log', 'log' is allowed only if the pitch values are not normalized during preprocessing
+  energy_quantization: "linear" # support 'linear' or 'log', 'log' is allowed only if the energy values are not normalized during preprocessing
+  n_bins: 256
+
+
+reference_encoder:
+  conv_filters: [512, 512]
+  conv_stride: 1
+  conv_kernel_size: 3
+  conv_padding: 1
+  lstm_layer_num: 2
+  lstm_hidden_size: 512
+
+reference_attention:
+  key_dim: 256
+  attention_dim: 128
+  attention_dropout: 0.0
+
+max_seq_len: 2000
+
+vocoder:
+  model: "HiFi-GAN" # support 'HiFi-GAN', 'MelGAN'
+  speaker: "AISHELL3_22k" # support  'LJSpeech', 'universal'
