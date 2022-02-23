@@ -37,7 +37,7 @@ def evaluate(model, step, configs, logger=None, vocoder=None):
     Loss = FastSpeech2Loss(preprocess_config, model_config).to(device)
 
     # Evaluation
-    loss_sums = [0 for _ in range(9)]
+    loss_sums = [0 for _ in range(6)]
     for batchs in loader:
         for batch in batchs:
             batch = to_device(batch, device)

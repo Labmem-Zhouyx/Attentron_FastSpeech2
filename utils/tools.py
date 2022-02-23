@@ -131,21 +131,21 @@ def synth_one_sample(targets, predictions, vocoder, model_config, preprocess_con
     basename = targets[0][0]
     src_len = predictions[8][0].item()
     mel_len = predictions[9][0].item()
-    mel_target = targets[8][0, :mel_len].detach().transpose(0, 1)
+    mel_target = targets[10][0, :mel_len].detach().transpose(0, 1)
     mel_prediction = predictions[1][0, :mel_len].detach().transpose(0, 1)
-    ref_alignment = predictions[11][0, :src_len].detach().transpose(0, 1).cpu().numpy()
+    ref_alignment = predictions[10][0, :src_len].detach().transpose(0, 1).cpu().numpy()
 
-    duration = targets[12][0, :src_len].detach().cpu().numpy()
+    duration = targets[15][0, :src_len].detach().cpu().numpy()
     if preprocess_config["preprocessing"]["pitch"]["feature"] == "phoneme_level":
-        pitch = targets[11][0, :src_len].detach().cpu().numpy()
+        pitch = targets[13][0, :src_len].detach().cpu().numpy()
         pitch = expand(pitch, duration)
     else:
-        pitch = targets[11][0, :mel_len].detach().cpu().numpy()
+        pitch = targets[13][0, :mel_len].detach().cpu().numpy()
     if preprocess_config["preprocessing"]["energy"]["feature"] == "phoneme_level":
-        energy = targets[12][0, :src_len].detach().cpu().numpy()
+        energy = targets[14][0, :src_len].detach().cpu().numpy()
         energy = expand(energy, duration)
     else:
-        energy = targets[12][0, :mel_len].detach().cpu().numpy()
+        energy = targets[14][0, :mel_len].detach().cpu().numpy()
 
     with open(
         os.path.join(preprocess_config["path"]["preprocessed_path"], "stats.json")
@@ -192,7 +192,7 @@ def synth_samples(targets, predictions, vocoder, model_config, preprocess_config
         src_len = predictions[8][i].item()
         mel_len = predictions[9][i].item()
         mel_prediction = predictions[1][i, :mel_len].detach().transpose(0, 1)
-        ref_alignment = predictions[11][i, :src_len].detach().transpose(0, 1).cpu().numpy()
+        ref_alignment = predictions[10][i, :src_len].detach().transpose(0, 1).cpu().numpy()
 
         duration = predictions[5][i, :src_len].detach().cpu().numpy()
         if preprocess_config["preprocessing"]["pitch"]["feature"] == "phoneme_level":
